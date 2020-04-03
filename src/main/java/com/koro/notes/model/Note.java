@@ -1,25 +1,38 @@
 package com.koro.notes.model;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.hateoas.RepresentationModel;
+
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.sql.Date;
 
 @Entity
 @Table(name = "notes")
-public class Note {
+@DynamicUpdate
+public class Note extends RepresentationModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String title;
+
     private String text;
-    private LocalDate creationDate;
-    private LocalDate lastUpdateDate;
+
+    @CreationTimestamp
+    @Column(updatable = false)
+    private Date creationDate;
+
+    @UpdateTimestamp
+    private Date lastUpdateDate;
+
     private boolean isArchived;
+
 
     public Note() {
     }
-
-
 
     public Long getId() {
         return id;
@@ -45,19 +58,19 @@ public class Note {
         this.text = text;
     }
 
-    public LocalDate getCreationDate() {
+    public Date getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(LocalDate creationDate) {
+    public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
     }
 
-    public LocalDate getLastUpdateDate() {
+    public Date getLastUpdateDate() {
         return lastUpdateDate;
     }
 
-    public void setLastUpdateDate(LocalDate lastUpdateDate) {
+    public void setLastUpdateDate(Date lastUpdateDate) {
         this.lastUpdateDate = lastUpdateDate;
     }
 
