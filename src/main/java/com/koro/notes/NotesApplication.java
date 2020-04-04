@@ -22,16 +22,4 @@ public class NotesApplication {
         SpringApplication.run(NotesApplication.class, args);
     }
 
-    @EventListener(ApplicationReadyEvent.class)
-    public void crate(){
-        Note note = new Note();
-        note.setArchived(false);
-        note.setCreationDate(LocalDate.now());
-        note.setLastUpdateDate(LocalDate.now());
-        note.setText("Kupic mleko");
-        note.setTitle("Lista zakupow");
-
-        noteRepository.save(note);
-    }
-
 }

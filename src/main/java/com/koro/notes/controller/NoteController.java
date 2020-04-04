@@ -16,6 +16,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @RestController
 @RequestMapping("/notes")
+@CrossOrigin
 public class NoteController {
 
     NoteRepository noteRepository;
