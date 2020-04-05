@@ -1,11 +1,13 @@
 package com.koro.notes.model;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -17,18 +19,18 @@ public class Note extends RepresentationModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String title;
+    private String title = "(No title)";
 
     private String text;
 
     @CreationTimestamp
     @Column(updatable = false)
-    private Date creationDate;
+    private LocalDateTime creationDate;
 
     @UpdateTimestamp
-    private Date lastUpdateDate;
+    private LocalDateTime lastUpdateDate;
 
-    private boolean isArchived;
+    private boolean archived;
 
 
     public Note() {
@@ -58,27 +60,27 @@ public class Note extends RepresentationModel {
         this.text = text;
     }
 
-    public Date getCreationDate() {
+    public LocalDateTime getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
     }
 
-    public Date getLastUpdateDate() {
+    public LocalDateTime getLastUpdateDate() {
         return lastUpdateDate;
     }
 
-    public void setLastUpdateDate(Date lastUpdateDate) {
+    public void setLastUpdateDate(LocalDateTime lastUpdateDate) {
         this.lastUpdateDate = lastUpdateDate;
     }
 
-    public boolean isArchived() {
-        return isArchived;
+    public boolean getArchived() {
+        return archived;
     }
 
     public void setArchived(boolean archived) {
-        isArchived = archived;
+        this.archived = archived;
     }
 }

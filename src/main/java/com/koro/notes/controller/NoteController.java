@@ -26,8 +26,17 @@ public class NoteController {
     }
 
     @GetMapping
-    public ResponseEntity<CollectionModel<Note>> getAllNotes() {
-        List<Note> noteList = noteRepository.findAll();
+    public ResponseEntity<CollectionModel<Note>> getActiveNotes() {
+        List<Note> noteList = noteRepository.findAllByArchivedFalse();
+        noteList.forEach(car -> car.add(linkTo(NoteController.class).slash(car.getId()).withSelfRel()));
+        Link link = linkTo(NoteController.class).withSelfRel();
+        CollectionModel<Note> noteCollection = new CollectionModel<>(noteList, link);
+        return new ResponseEntity<>(noteCollection, HttpStatus.OK);
+    }
+
+    @GetMapping("/archived")
+    public ResponseEntity<CollectionModel<Note>> getArchivedNotes() {
+        List<Note> noteList = noteRepository.findAllByArchivedTrue();
         noteList.forEach(car -> car.add(linkTo(NoteController.class).slash(car.getId()).withSelfRel()));
         Link link = linkTo(NoteController.class).withSelfRel();
         CollectionModel<Note> noteCollection = new CollectionModel<>(noteList, link);
